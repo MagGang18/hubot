@@ -15,14 +15,15 @@
     "url": "https://github.com/hubotio/hubot.git"
   },
   "dependencies": {
-    "async": ">=0.1.0 <1.0.0",
+    "async": "^3.2.4",
     "chalk": "^1.0.0",
     "cline": "^0.8.2",
     "coffeescript": "1.6.3",
     "connect-multiparty": "^2.1.1",
     "express": "^4.16.3",
     "express-basic-auth": "1.1.7",
-    "log": "1.4.0",
+    "log": "^6.3.1",
+    "log-node": "^8.0.3",
     "optparse": "1.0.4"
   },
   "devDependencies": {

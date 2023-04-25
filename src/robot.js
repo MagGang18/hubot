@@ -1,11 +1,12 @@
 'use strict'
+require('log-node')()
 
 const EventEmitter = require('events').EventEmitter
 const fs = require('fs')
 const path = require('path')
 
 const async = require('async')
-const Log = require('log')
+const log = require('log')
 const HttpClient = require('./httpclient')
 
 const Brain = require('./brain')
@@ -49,7 +50,9 @@ class Robot {
       response: new Middleware(this),
       receive: new Middleware(this)
     }
-    this.logger = new Log(process.env.HUBOT_LOG_LEVEL || 'info')
+    process.env.LOG_LEVEL = process.env.LOG_LEVEL || process.env.HUBOT_LOG_LEVEL || 'notice'
+    this.logger = log.get('robot')
+
     this.pingIntervalId = null
     this.globalHttpOptions = {}
 
@@ -317,13 +320,13 @@ class Robot {
           // stack doesn't get too big
           process.nextTick(() =>
             // Stop processing when message.done == true
-            done(context.response.message.done)
+            done(null, context.response.message.done)
           )
         })
       } catch (err) {
         this.emit('error', err, new this.Response(this, context.response.message, []))
         // Continue to next listener when there is an error
-        done(false)
+        done(null, false)
       }
     },
     // Ignore the result ( == the listener that set message.done = true)
