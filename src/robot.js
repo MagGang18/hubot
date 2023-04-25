@@ -5,7 +5,7 @@ const fs = require('fs')
 const path = require('path')
 
 const async = require('async')
-const Log = require('log')
+const pino = require('pino')
 const HttpClient = require('./httpclient')
 
 const Brain = require('./brain')
@@ -49,7 +49,16 @@ class Robot {
       response: new Middleware(this),
       receive: new Middleware(this)
     }
-    this.logger = new Log(process.env.HUBOT_LOG_LEVEL || 'info')
+    this.logger = pino({
+      name,
+      level: process.env.HUBOT_LOG_LEVEL || 'info'
+    })
+    Reflect.defineProperty(this.logger, 'warning', {
+      value: this.logger.warn,
+      enumerable: true,
+      configurable: true
+    })
+
     this.pingIntervalId = null
     this.globalHttpOptions = {}
 

@@ -22,8 +22,8 @@
     "connect-multiparty": "^2.1.1",
     "express": "^4.16.3",
     "express-basic-auth": "1.1.7",
-    "log": "1.4.0",
-    "optparse": "1.0.4"
+    "optparse": "1.0.4",
+    "pino": "^8.11.0"
   },
   "devDependencies": {
     "chai": "~2.1.0",
